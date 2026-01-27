@@ -70,11 +70,6 @@ const registerUser = asyncHandler( async (req, res) => {
     try {
         const verificationLink = `${process.env.CORS_ORIGIN}/verify-email/${verificationToken}`;
 
-        console.log("------------------------------------------------");
-        console.log("📧 VERIFICATION LINK (Click to Verify):");
-        console.log(verificationLink);
-        console.log("------------------------------------------------");
-
         // Define HTML Message
         const emailHtml = getVerificationTemplate(verificationLink)
 
@@ -129,7 +124,9 @@ const loginUser = asyncHandler( async (req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000
     }
 
     return res
@@ -159,7 +156,8 @@ const logoutUser = asyncHandler( async (req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite: "None",
     }
 
     return res
@@ -202,7 +200,9 @@ const refreshAccessToken = asyncHandler( async (req, res) => {
 
         const options = {
             httpOnly: true,
-            secure: true
+            secure: true,
+            sameSite: "None",
+            maxAge: 7 * 24 * 60 * 60 * 1000
         }
 
         // generate the tokens
@@ -524,11 +524,6 @@ const forgotPassword = asyncHandler( async (req, res) => {
     await user.save({ validateBeforeSave: false })
 
     const resetUrl = `${process.env.CORS_ORIGIN}/reset-password/${resetToken}`;
-
-    console.log("------------------------------------------------");
-    console.log("🔑 PASSWORD RESET LINK (Click to Reset):");
-    console.log(resetUrl);
-    console.log("------------------------------------------------");
 
     try {
         await sendEmail(
