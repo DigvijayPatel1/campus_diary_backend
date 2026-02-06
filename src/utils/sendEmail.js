@@ -19,12 +19,12 @@ export const transporter = nodemailer.createTransport({
 export const sendEmail = async (to, subject, htmlContent) => {
     try {
         await transporter.sendMail({
-            from: `"NITConnect" <${process.env.EMAIL_USER}>`,
+            from: `"CampusDiary" <${process.env.EMAIL_USER}>`,
             to: to,
             subject: subject,
             html: htmlContent, 
         });
-        console.log(`📧 Email sent successfully to ${to}`);
+        console.log(`Email sent successfully to ${to}`);
     } catch (error) {
         console.error("Error sending email:", error);
         throw new ApiError(500, "Email sending failed");

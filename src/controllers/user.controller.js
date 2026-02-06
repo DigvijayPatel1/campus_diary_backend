@@ -74,9 +74,9 @@ const registerUser = asyncHandler( async (req, res) => {
         const emailHtml = getVerificationTemplate(verificationLink)
 
         // Send Email
-        await sendEmail(user.email, "Verify your NITConnect Account", emailHtml);
+        await sendEmail(user.email, "Verify your Campus Diary Account", emailHtml);
     } catch (emailError) {
-        console.error("❌ EMAIL SENDING ERROR:", emailError);
+        console.error("EMAIL SENDING ERROR:", emailError);
         await User.findByIdAndDelete(user._id);
         throw new ApiError(500, "Failed to send verification email. Please try again.");
     }
