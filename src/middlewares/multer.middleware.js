@@ -1,8 +1,12 @@
 import multer from 'multer'
 import fs from "fs"
 import path from "path"
+import os from "os"
 
-const uploadDir = path.join(process.cwd(), "public", "temp")
+const uploadDir = path.join(
+  process.env.MULTER_TEMP_DIR || os.tmpdir(),
+  "campus-uploads"
+)
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
