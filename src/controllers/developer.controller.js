@@ -37,6 +37,11 @@ const createDeveloper = asyncHandler( async(req,res)=>{
   const image = await uploadOnCloudinary(localFilePath)
 
   const socialLinks = req.body.socialLinks || {};
+  const github = req.body["socialLinks[github]"] || req.body["socialLinks.github"] || socialLinks.github || req.body.github;
+
+  const linkedin = req.body["socialLinks[linkedin]"] || req.body["socialLinks.linkedin"] || req.body["socialLinks[linkedIn]"] || req.body["socialLinks.linkedIn"] || socialLinks.linkedin || socialLinks.linkedIn || req.body.linkedin || req.body.linkedIn;
+
+  const instagram = req.body["socialLinks[instagram]"] || req.body["socialLinks.instagram"] || socialLinks.instagram || req.body.instagram;
 
   const developer = await Developer.create({
     owner: req.user._id,
@@ -44,9 +49,9 @@ const createDeveloper = asyncHandler( async(req,res)=>{
     role: role?.trim() || "Full stack developer",
     photoUrl: image?.url,
     socialLinks: {
-      github: socialLinks.github?.trim() || null,
-      linkedin: socialLinks.linkedin?.trim() || null,
-      instagram: socialLinks.instagram?.trim() || null,
+      github: typeof github === "string" ? github.trim() : null,
+      linkedin: typeof linkedin === "string" ? linkedin.trim() : null,
+      instagram: typeof instagram === "string" ? instagram.trim() : null,
     },
   });
 
@@ -122,9 +127,13 @@ const updateDeveloper = asyncHandler( async(req,res)=>{
     developer.photoUrl = cloudinaryResponse.url;
   }
 
-  const github = req.body["socialLinks[github]"] || req.body["socialLinks.github"];
-  const linkedin = req.body["socialLinks[linkedin]"] || req.body["socialLinks.linkedin"];
-  const instagram = req.body["socialLinks[instagram]"] || req.body["socialLinks.instagram"];
+  const socialLinks = req.body.socialLinks || {};
+
+  const github = req.body["socialLinks[github]"] || req.body["socialLinks.github"] || socialLinks.github || req.body.github;
+
+  const linkedin = req.body["socialLinks[linkedin]"] || req.body["socialLinks.linkedin"] || req.body["socialLinks[linkedIn]"] || req.body["socialLinks.linkedIn"] || socialLinks.linkedin || socialLinks.linkedIn || req.body.linkedin || req.body.linkedIn;
+  
+  const instagram = req.body["socialLinks[instagram]"] || req.body["socialLinks.instagram"] || socialLinks.instagram || req.body.instagram;
 
   if (github !== undefined || linkedin !== undefined || instagram !== undefined) {
     developer.socialLinks = {
