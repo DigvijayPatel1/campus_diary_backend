@@ -9,6 +9,18 @@ cloudinary.config({
 
 
 const uploadOnCloudinary = async (localFilePath) => {
+    const cleanupLocalFile = async () => {
+        if (!localFilePath) return;
+
+        try {
+            await fs.promises.unlink(localFilePath);
+        } catch (unlinkError) {
+            if (unlinkError?.code !== "ENOENT") {
+                console.error("Failed to remove local upload:", unlinkError);
+            }
+        }
+    };
+
     try {
       
         if (!localFilePath) return null
@@ -17,12 +29,12 @@ const uploadOnCloudinary = async (localFilePath) => {
             resource_type: "auto"
         })
 
-        fs.unlinkSync(localFilePath)
         return response;
     } catch (error) {
-        fs.unlinkSync(localFilePath)
-        console.error(error);
+        console.error("Cloudinary upload failed:", error);
         return null;
+    } finally {
+        await cleanupLocalFile();
     }
 };
 
