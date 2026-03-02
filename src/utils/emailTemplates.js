@@ -3,7 +3,7 @@ export const getPasswordResetTemplate = (userName, resetUrl) => {
         <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px;">
             <h2 style="color: #1e293b; text-align: center;">Password Reset Request</h2>
             <p style="color: #475569; font-size: 16px;">Hello ${userName},</p>
-            <p style="color: #475569; font-size: 16px;">You requested a password reset for your Campus Diary account.</p>
+            <p style="color: #475569; font-size: 16px;">You requested a password reset for your Campus Voice account.</p>
             
             <div style="text-align: center; margin: 30px 0;">
                 <a href="${resetUrl}" style="background-color: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Reset Password</a>
@@ -25,7 +25,7 @@ export const getPasswordResetTemplate = (userName, resetUrl) => {
 export const getVerificationTemplate = (verificationUrl) => {
     return `
     <div style="font-family: Arial, sans-serif; padding: 20px; text-align: center;">
-        <h2>Welcome to NITConnect!</h2>
+        <h2>Welcome to CampusVoice!</h2>
         <p>Please verify your email to access all features.</p>
         <a href="${verificationUrl}">Verify Email</a>
     </div>
